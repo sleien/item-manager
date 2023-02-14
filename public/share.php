@@ -1,15 +1,6 @@
 <?php
-// start session if it hasn't been started already
-if (!isset($_SESSION)) {
-    session_start();
-}
-
-// check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    // redirect to login page if user is not logged in
-    header('Location: login.php');
-    exit();
-}
+include 'header.php';
+include 'config.php';
 
 // check if item id is provided
 if (!isset($_GET['item_id'])) {
@@ -21,14 +12,11 @@ if (!isset($_GET['item_id'])) {
 // get item id from query string
 $item_id = $_GET['item_id'];
 
-// Include database credentials
-include 'config.php';
-
 // Connect to the database
 try {
     $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . "", DB_USER, DB_PASS);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
     exit;
 }
@@ -50,7 +38,7 @@ if ($row) {
 
 // check if user is the main user for the item
 if ($_SESSION['user_id'] != $main_user_id) {
-    
+
     // user is not the main user, redirect to list page
     header('Location: list.php');
     exit();
@@ -64,37 +52,62 @@ $result2 = $conn->query($query);
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Share Item</title>
-</head>
-<body>
+<section class="content">
     <h1>Share Item</h1>
 
-    <p>Share this item with:</p>
-
     <?php if ($result->rowCount() > 0): ?>
-        <ul>
-            <?php foreach ($result as $row): ?>
-                <li><?php echo $row['username'] ?> (<?php echo $row['email'] ?>) <a href="share_action.php?item_id=<?php echo $item_id ?>&share_user_id=<?php echo $row['id'] ?>">Share</a></li>
-            <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p>No users not connected to this item.</p>
-    <?php endif; ?>
-    
-    <p>Unshare this item with:</p>
-    <?php if ($result2->rowCount() > 0): ?>
-        <ul>
-            <?php foreach ($result2 as $row): ?>
-                <li><?php echo $row['username'] ?> (<?php echo $row['email'] ?>) <a href="unshare.php?item_id=<?php echo $item_id ?>&unshare_user_id=<?php echo $row['id'] ?>">Unshare</a></li>
+        <table>
+            <thead>
+                <tr>
+                    <th>Share with:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($result as $row): ?>
+                    <tr>
+                        <td>
+                            <?php echo $row['username'] ?> -
+                            <?php echo $row['email'] ?>
+                        </td>
+                        <td><a href="share_action.php?item_id=<?php echo $item_id ?>&share_user_id=<?php echo $row['id'] ?>"><button
+                                    type="button">Share</button>
+                            </a>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
-        </ul>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>There is no one to share the item with!</p>
+    <?php endif; ?>
+
+    <?php if ($result2->rowCount() > 0): ?>
+        <table>
+            <thead>
+                <tr>
+                    <th>Shared with:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($result2 as $row): ?>
+                    <tr>
+                        <td>
+                            <?php echo $row['username'] ?> -
+                            <?php echo $row['email'] ?>
+                        </td>
+                        <td><a href="unshare.php?item_id=<?php echo $item_id ?>&unshare_user_id=<?php echo $row['id'] ?>"><button
+                                    type="button">Unshare</button>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     <?php else: ?>
         <p>Not yet shared.</p>
     <?php endif; ?>
 
     <p><a href="list.php">Back to list</a></p>
-</body>
-</html>
+
+</section>
+<?php include 'footer.php'; ?>

@@ -1,8 +1,7 @@
 <?php
-// start session if it hasn't been started already
-if (!isset($_SESSION)) {
-    session_start();
-}
+include 'header.php';
+include 'config.php';
+
 
 // check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -13,9 +12,6 @@ if (!isset($_SESSION['user_id'])) {
 
 // Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Include database credentials
-    include 'config.php';
-
     // Connect to the database
     try {
         $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . "", DB_USER, DB_PASS);
@@ -62,33 +58,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Add Item - Item Manager</title>
-</head>
-
-<body>
-
+<section class="content">
     <h1>Add Item</h1>
 
     <form method="post">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" required>
-        <br>
-        <label for="description">Description:</label>
-        <textarea name="description" id="description"></textarea>
-        <br>
-        <label for="price">Price:</label>
-        <input type="number" step="0.01" name="price" id="price" required value="0">
-        <br>
-        <label for="quantity">Quantity:</label>
-        <input type="number" step="1" name="quantity" id="quantity" required value="1">
-        <br>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" required>
+        </div>
+
+        <div>
+            <label for="description">Description:</label>
+            <textarea name="description" id="description"></textarea>
+        </div>
+
+        <div>
+            <label for="price">Price:</label>
+            <input type="number" step="0.01" name="price" id="price" required value="0">
+        </div>
+
+        <div>
+            <label for="quantity">Quantity:</label>
+            <input type="number" step="1" name="quantity" id="quantity" required value="1">
+        </div>
+
         <button type="submit">Add Item</button>
     </form>
 
-</body>
+</section>
 
-</html>
+
+<?php include 'footer.php'; ?>

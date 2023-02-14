@@ -1,0 +1,159 @@
+:root {
+    --background-color: #d0d0d0;
+    --primary-color: #f0f0f0;
+    --secondary-color: #333333;
+    --secondary2-color: #2f2f2f;
+    --tertiary-color: #007bff;
+    --tertiary2-color: #0069d9;
+}
+
+body {
+    background-color: var(--background-color);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--secondary-color);
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    margin-top: 2.5rem;
+}
+
+.login{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin: 0 0 1.5rem;
+    text-align: center;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: var(--background-color);
+    margin: 1.5rem 0;
+}
+
+.content {
+    background-color: var(--primary-color);
+    ;
+    font-size: 1rem;
+    padding: 1.875rem;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input,
+textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--primary-color);
+    ;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+
+
+button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--tertiary-color);
+    color: var(--primary-color);
+    ;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--tertiary2-color);
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    background-color: var(--background-color);
+}
+
+nav ul {
+    background-color: var(--primary-color);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+}
+
+nav li {
+    margin: 0 20px;
+}
+
+nav li:last-child {
+    text-align: end;
+}
+
+nav a {
+    display: block;
+    color: var(--secondary-color);
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.2s ease;
+}
+
+nav a:hover {
+    color: var(--secondary2-color);
+}

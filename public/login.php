@@ -1,6 +1,11 @@
 <?php
+include 'header.php';
+include 'config.php';
 
-session_start();
+// start session if it hasn't been started already
+if (!isset($_SESSION)) {
+    session_start();
+}
 
 // Check if the user is already logged in
 if (isset($_SESSION['user_id'])) {
@@ -11,8 +16,6 @@ if (isset($_SESSION['user_id'])) {
 
 // Check if the login form was submitted
 if (isset($_POST['login'])) {
-    // Connect to the database// Include database credentials
-    include 'config.php';
 
     // Connect to the database
     try {
@@ -41,7 +44,7 @@ if (isset($_POST['login'])) {
         $_SESSION['user_id'] = $user['id'];
 
         // Redirect to the main page
-        header('Location: index.php');
+        header('Location: list.php');
         exit();
     } else {
         // Display an error message
@@ -54,30 +57,30 @@ if (isset($_POST['login'])) {
 
 ?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Login - Item Manager</title>
-</head>
-
-<body>
-
+<section class="content login">
     <h1>Login</h1>
 
-    <?php if (isset($error)) : ?>
-        <p><?php echo $error; ?></p>
+    <?php if (isset($error)): ?>
+        <p>
+            <?php echo $error; ?>
+        </p>
     <?php endif; ?>
 
     <form method="post">
-        <label>Username:</label>
-        <input type="text" name="username" required><br>
-        <label>Password:</label>
-        <input type="password" name="password" required><br>
+        <div>
+            <label>Username:</label>
+            <input type="text" name="username" required>
+        </div>
+
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
+        </div>
         <button type="submit" name="login">Login</button>
+        <p>Don't have an account?</p>
+        <a href="register.php"><button type="button">Register</button></a>
     </form>
-    <p>Don't have an account? <a href="register.php">Register here</a>.</p>
 
-</body>
+</section>
 
-</html>
+<?php include 'footer.php'; ?>

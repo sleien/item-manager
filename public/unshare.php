@@ -1,6 +1,12 @@
 <?php
-// Check if the user is logged in
-session_start();
+include 'header.php';
+include 'config.php';
+
+// start session if it hasn't been started already
+if (!isset($_SESSION)) {
+    session_start();
+  }
+
 if (!isset($_SESSION['user_id'])) {
   header('Location: login.php');
   exit;
@@ -10,8 +16,6 @@ if (!isset($_SESSION['user_id'])) {
 $item_id = $_GET['item_id'];
 $unshare_user_id = $_GET['unshare_user_id'];
 
-// Include database credentials
-include 'config.php';
 
 // Connect to the database
 try {
@@ -49,5 +53,6 @@ $stmt->execute([$unshare_user_id, $item_id]);
 
 // Redirect back to the list page
 header('Location: list.php');
+include 'footer.php';
 exit;
 ?>

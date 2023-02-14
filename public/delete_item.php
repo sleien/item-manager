@@ -1,17 +1,9 @@
 <?php
-// Check if the user is logged in
-session_start();
-if (!isset($_SESSION['user_id'])) {
-  header('Location: login.php');
-  exit;
-}
+include 'header.php';
+include 'config.php';
 
 // Get the item ID to delete
 $item_id = $_GET['item_id'];
-
-// Connect to the database
-// Include database credentials
-include 'config.php';
 
 // Connect to the database
 try {
@@ -44,6 +36,7 @@ try {
 
   // Redirect back to the list page
   header('Location: list.php');
+  include 'footer.php';
   exit;
 } catch (PDOException $e) {
   echo 'Error: ' . $e->getMessage();

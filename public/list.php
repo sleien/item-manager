@@ -1,19 +1,5 @@
 <?php
-
-// start session if it hasn't been started already
-if (!isset($_SESSION)) {
-  session_start();
-}
-
-// check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-  // redirect to login page if user is not logged in
-  header('Location: login.php');
-  exit();
-}
-
-// Connect to the database
-// Include database credentials
+include 'header.php';
 include 'config.php';
 
 // Connect to the database
@@ -43,20 +29,12 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<!DOCTYPE html>
-<html>
-
-<head>
-  <title>My Items - Item Manager</title>
-</head>
-
-<body>
-
+<section class="content">
   <h1>My Items</h1>
+  <div class="spacer"></div>
+  <a href="add_item.php"><button>Add Item</button></a>
 
-  <p>Add Item: <a href="add_item.php">Add</a></p>
-
-  <?php if (count($items) > 0) : ?>
+  <?php if (count($items) > 0): ?>
 
     <table>
       <thead>
@@ -68,33 +46,53 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </tr>
       </thead>
       <tbody>
-        <?php foreach ($items as $item) : if ($item['main_user_id'] == $_SESSION['user_id']) : ?>
+        <?php foreach ($items as $item):
+          if ($item['main_user_id'] == $_SESSION['user_id']): ?>
             <tr>
-              <td><?php echo htmlspecialchars($item['name']); ?></td>
-              <td><?php echo htmlspecialchars($item['description']); ?></td>
-              <td><?php echo htmlspecialchars($item['price']); ?></td>
-              <td><?php echo htmlspecialchars($item['quantity']); ?></td>
-              <td><a href="share.php?item_id=<?php echo $item['id']; ?>">Share</a></td>
-              <td><a href="delete_item.php?item_id=<?php echo $item['id']; ?>">Delete</a></td>
+              <td>
+                <?php echo htmlspecialchars($item['name']); ?>
+              </td>
+              <td>
+                <?php echo htmlspecialchars($item['description']); ?>
+              </td>
+              <td>
+                <?php echo htmlspecialchars($item['price']); ?>
+              </td>
+              <td>
+                <?php echo htmlspecialchars($item['quantity']); ?>
+              </td>
+              <td><a href="share.php?item_id=<?php echo $item['id']; ?>"><button>Share</button></a></td>
+              <td><a href="edit_item.php?item_id=<?php echo $item['id']; ?>"><button>Edit</button></a></td>
+              <td><a href="delete_item.php?item_id=<?php echo $item['id']; ?>"><button>Delete</button></a></td>
             </tr>
-          <?php else : ?>
+          <?php else: ?>
             <tr>
-              <td><?php echo htmlspecialchars($item['name']); ?></td>
-              <td><?php echo htmlspecialchars($item['description']); ?></td>
-              <td><?php echo htmlspecialchars($item['price']); ?></td>
-              <td><?php echo htmlspecialchars($item['quantity']); ?></td>
+              <td>
+                <?php echo htmlspecialchars($item['name']); ?>
+              </td>
+              <td>
+                <?php echo htmlspecialchars($item['description']); ?>
+              </td>
+              <td>
+                <?php echo htmlspecialchars($item['price']); ?>
+              </td>
+              <td>
+                <?php echo htmlspecialchars($item['quantity']); ?>
+              </td>
+              <td>
+                Shared with you
+              </td>
             </tr>
-        <?php endif;
+          <?php endif;
         endforeach; ?>
       </tbody>
     </table>
 
-  <?php else : ?>
+  <?php else: ?>
 
     <p>You are not connected to any items.</p>
 
   <?php endif; ?>
+</section>
 
-</body>
-
-</html>
+<?php include 'footer.php'; ?>

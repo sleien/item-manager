@@ -1,10 +1,10 @@
 <?php
+include 'header.php';
+include 'config.php';
+
 
 // Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Include database credentials
-    include 'config.php';
-
     // Connect to the database
     try {
         $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . "", DB_USER, DB_PASS);
@@ -38,30 +38,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>Register - Item Manager</title>
-</head>
-
-<body>
-
+<section class="content login">
     <h1>Register</h1>
 
     <form method="post">
+        <div>
         <label for="username">Username:</label>
         <input type="text" name="username" id="username" required>
-        <br>
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-        <br>
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
-        <br>
+        </div>
+
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+        </div>
         <button type="submit">Register</button>
     </form>
 
-</body>
-
-</html>
+</section>
+<?php include 'footer.php'; ?>
