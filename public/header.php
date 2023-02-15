@@ -11,15 +11,16 @@ if (!isset($_SESSION['user_id']) and !in_array(basename($_SERVER["SCRIPT_FILENAM
     exit();
 }
 ?>
-<style>
-    <?php include 'css/style.css'; ?>
-</style>
 
 <!DOCTYPE html>
 <html>
 
 <head>
     <title>Item Manager</title>
+    <link rel="icon" type="image/svg+xml" href="./img/icon.svg" sizes="any">
+<style>
+    <?php include 'css/style.css'; ?>
+</style>
 </head>
 
 <body>
