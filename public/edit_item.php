@@ -45,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $stmt->bindParam(':description', $_POST['description']);
   $stmt->bindParam(':price', $_POST['price']);
   $stmt->bindParam(':quantity', $_POST['quantity']);
-  $stmt->bindParam(':link', $_POST['link']);
+  $link = str_starts_with($_POST['link'], 'http') ? $_POST['link'] : 'https://' . $_POST['link'];
+  $stmt->bindParam(':link', $link);
   $wishlist = isset($_POST['wishlist']) ? 1 : 0;
   $stmt->bindParam(':wishlist', $wishlist);
   // update the item in the database

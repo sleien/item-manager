@@ -18,6 +18,8 @@ if (!isset($_SESSION['user_id']) and !in_array(basename($_SERVER["SCRIPT_FILENAM
 <head>
     <title>Item Manager</title>
     <link rel="icon" type="image/svg+xml" href="./img/icon.svg" sizes="any">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
     <?php include 'css/style.css'; ?>
 </style>

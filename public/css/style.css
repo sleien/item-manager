@@ -10,7 +10,7 @@
 body {
     background-color: var(--background-color);
     font-family: 'Open Sans', sans-serif;
-    font-size: 1rem;
+    font-size: 20px;
     line-height: 1.5;
     color: var(--secondary-color);
     margin: 0;
@@ -20,20 +20,21 @@ body {
 .wrapper {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 1em;
     display: grid;
-    margin-top: 2.5rem;
+    margin-top: 1em;
 }
 
-.login{
+.login {
     border-top-left-radius: 5px;
-    border-top-right-radius: 5px;}
+    border-top-right-radius: 5px;
+}
 
 h1 {
-    font-size: 2rem;
+    font-size: 1.5em;
     font-weight: 600;
     color: var(--secondary-color);
-    margin: 0 0 1.5rem;
+    margin: 0 0 1em;
     text-align: center;
 }
 
@@ -42,17 +43,15 @@ h1::after {
     display: block;
     height: 1px;
     background-color: var(--background-color);
-    margin: 1.5rem 0;
+    margin: 0.5em 0;
 }
 
 .content {
     background-color: var(--primary-color);
-    ;
-    font-size: 1rem;
-    padding: 1.875rem;
+    padding: 1em;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.1);
     align-items: center;
 }
 
@@ -63,7 +62,7 @@ table {
 }
 
 th, td {
-    padding: 10px;
+    padding: 0.5em;
     text-align: left;
 }
 
@@ -76,15 +75,15 @@ form {
     flex-direction: column;
     max-width: 500px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 1em;
     border-radius: 5px;
 }
 
-.form-checkbox{
+.form-checkbox {
     flex-direction: row
 }
 
-.form-checkbox > input{
+.form-checkbox>input {
     box-shadow: none;
     margin-bottom: 6px;
 }
@@ -92,36 +91,33 @@ form {
 div {
     display: flex;
     flex-direction: column;
-    margin-bottom: 10px;
+    margin-bottom: 0.5em;
 }
 
 label {
-    font-size: 16px;
+    font-size: 1em;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
 input,
 textarea {
-    padding: 10px;
+    font-size: 1em;
+    padding: 0.5em;
     border-radius: 5px;
     border: none;
     background-color: var(--primary-color);
-    ;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-
-
 button {
     width: 100%;
-    padding: 10px;
+    padding: 0.5em;
     border-radius: 5px;
     border: none;
     background-color: var(--tertiary-color);
     color: var(--primary-color);
-    ;
-    font-size: 16px;
+    font-size: 1em;
     font-weight: bold;
     cursor: pointer;
 }
@@ -134,6 +130,7 @@ nav {
     position: sticky;
     top: 0;
     background-color: var(--background-color);
+    font-size: 1em;
 }
 
 nav ul {
@@ -148,7 +145,7 @@ nav ul {
 }
 
 nav li {
-    margin: 0 20px;
+    margin: 0 1em;
 }
 
 nav li:last-child {
@@ -165,4 +162,18 @@ nav a {
 
 nav a:hover {
     color: var(--secondary2-color);
+}
+
+@media only screen and (max-width: 1000px) {
+    body {
+        font-size: 18px;
+    }
+    .wrapper {
+        padding: 0;
+        margin-top: 0;
+    }
+    table > * > tr {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }
