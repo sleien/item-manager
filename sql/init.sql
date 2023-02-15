@@ -28,3 +28,4 @@ CREATE TABLE user_items (
 
 ALTER TABLE items ADD COLUMN quantity INT DEFAULT 0;
 ALTER TABLE items ADD COLUMN main_user_id INT(11);
+ALTER TABLE items ADD wishlist BOOLEAN NOT NULL DEFAULT 0;

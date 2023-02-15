@@ -10,12 +10,18 @@ try {
   echo "Connection failed: " . $e->getMessage();
   exit;
 }
+
+if(isset($_GET["wishlist"])){
+  $_SESSION["wishlist"] = $_GET["wishlist"];
+}
+
 // Prepare the SQL statement to retrieve the user's items and their stats
 $stmt = $conn->prepare("
   SELECT items.*, user_items.*
   FROM user_items
   INNER JOIN items ON user_items.item_id = items.id
   WHERE user_items.user_id = :user_id
+  AND wishlist = ". $_SESSION["wishlist"] ."
 ");
 
 // Bind the user ID to the prepared statement
@@ -30,7 +36,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <section class="content">
-  <h1>My Items</h1>
+  <h1>Items</h1>
   <div class="spacer"></div>
   <a href="add_item.php"><button>Add Item</button></a>
 

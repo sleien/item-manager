@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Prepare the SQL statement to insert a new item into the items table
     $stmt = $conn->prepare("
-    INSERT INTO items (name, description, price, quantity, main_user_id)
-    VALUES (:name, :description, :price, :quantity, :main_user_id)
+    INSERT INTO items (name, description, price, quantity, main_user_id, wishlist)
+    VALUES (:name, :description, :price, :quantity, :main_user_id, :wishlist)
   ");
 
     // Bind the form data to the prepared statement
@@ -33,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':price', $_POST['price']);
     $stmt->bindParam(':quantity', $_POST['quantity']);
     $stmt->bindParam(':main_user_id', $_SESSION['user_id']);
+    $wishlist = isset($_POST['wishlist']) ? 1 : 0;
+    $stmt->bindParam(':wishlist', $wishlist);
     // Execute the statement and get the ID of the newly inserted item
     if ($stmt->execute()) {
         $item_id = $conn->lastInsertId();
@@ -80,6 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div>
             <label for="quantity">Quantity:</label>
             <input type="number" step="1" name="quantity" id="quantity" required value="1">
+        </div>
+
+        <div class="form-checkbox">
+            <label for="wishlist">Wishlist:</label>
+            <input type="checkbox" name="wishlist" id="wishlist">
         </div>
 
         <button type="submit">Add Item</button>
