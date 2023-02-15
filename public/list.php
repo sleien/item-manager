@@ -41,10 +41,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <?php else : ?>
     <h1>Wishlist</h1>
   <?php endif; ?>
-  <a href="add_item.php"><button>Add Item</button></a>
-
   <?php if (count($items) > 0) : ?>
-
     <table>
       <thead>
         <tr>
