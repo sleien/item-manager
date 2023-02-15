@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Prepare the SQL statement to insert a new item into the items table
     $stmt = $conn->prepare("
-    INSERT INTO items (name, description, price, quantity, main_user_id, wishlist)
-    VALUES (:name, :description, :price, :quantity, :main_user_id, :wishlist)
+    INSERT INTO items (name, description, price, quantity, main_user_id, wishlist, link)
+    VALUES (:name, :description, :price, :quantity, :main_user_id, :wishlist, :link)
   ");
 
     // Bind the form data to the prepared statement
@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':description', $_POST['description']);
     $stmt->bindParam(':price', $_POST['price']);
     $stmt->bindParam(':quantity', $_POST['quantity']);
+    $stmt->bindParam(':link', $_POST['link']);
     $stmt->bindParam(':main_user_id', $_SESSION['user_id']);
     $wishlist = isset($_POST['wishlist']) ? 1 : 0;
     $stmt->bindParam(':wishlist', $wishlist);
@@ -82,6 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div>
             <label for="quantity">Quantity:</label>
             <input type="number" step="1" name="quantity" id="quantity" required value="1">
+        </div>
+
+        <div>
+            <label for="link">Link:</label>
+            <input type="url" name="link" id="link" placeholder="https://example.com" pattern="https://.*">
         </div>
 
         <div class="form-checkbox">
