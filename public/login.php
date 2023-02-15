@@ -42,6 +42,7 @@ if (isset($_POST['login'])) {
     if ($user && password_verify($_POST['password'], $user['password'])) {
         // Set the user ID in the session
         $_SESSION['user_id'] = $user['id'];
+        $_SESSION['wishlist'] = 0;
 
         // Redirect to the main page
         header('Location: list.php');

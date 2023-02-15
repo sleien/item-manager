@@ -39,15 +39,20 @@ if ($_SESSION['user_id'] != $item['main_user_id']) {
 
 // check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  // sanitize input data
-  $name = filter_var($_POST['name'], FILTER_SANITIZE_STRING);
-  $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING);
-  $price = filter_var($_POST['price'], FILTER_SANITIZE_STRING);
-  $quantity = filter_var($_POST['quantity'], FILTER_SANITIZE_STRING);
-
+  $stmt = $conn->prepare('UPDATE items SET name = :name, description = :description, price = :price, quantity = :quantity, link = :link, wishlist = :wishlist WHERE id = ' . $item_id);
+  // Bind the form data to the prepared statement
+  $stmt->bindParam(':name', $_POST['name']);
+  $stmt->bindParam(':description', $_POST['description']);
+  $stmt->bindParam(':price', $_POST['price']);
+  $stmt->bindParam(':quantity', $_POST['quantity']);
+  $stmt->bindParam(':link', $_POST['link']);
+  $wishlist = isset($_POST['wishlist']) ? 1 : 0;
+  $stmt->bindParam(':wishlist', $wishlist);
   // update the item in the database
-  $stmt = $conn->prepare('UPDATE items SET name = ?, description = ?, price = ?, quantity = ? WHERE id = ?');
-  $stmt->execute([$name, $description, $price, $quantity, $item_id]);
+  if (!$stmt->execute()) {
+    // Item adding failed
+    echo "Updating item failed. Please try again.";
+  }
 
   // redirect to the item list page
   header('Location: list.php');
@@ -61,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <form method="POST">
     <div>
       <label for="name">Name:</label>
-      <input type="text" id="name" name="name" value="<?php echo $item['name']; ?>"><br>
+      <input type="text" id="name" name="name" value="<?php echo $item['name']; ?>">
     </div>
 
     <div>
@@ -75,6 +80,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div>
       <label for="description">Quantity:</label>
       <input type="number" step="1" name="quantity" id="quantity" required value="<?php echo $item['quantity']; ?>">
+    </div>
+
+    <div>
+      <label for="link">Link:</label>
+      <input type="text" name="link" id="link" value="<?php echo $item['link']; ?>" placeholder="https://example.com" pattern="^(https?://)?([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?$">
+    </div>
+
+    <div class="form-checkbox">
+      <label for="wishlist">Wishlist:</label>
+      <input type="checkbox" name="wishlist" id="wishlist" <?php if ($item['wishlist'] == 1) echo 'checked="checked"'; ?>>
     </div>
     <button type="submit">Save</button>
   </form>

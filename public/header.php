@@ -29,7 +29,8 @@ if (!isset($_SESSION['user_id']) and !in_array(basename($_SERVER["SCRIPT_FILENAM
         <?php if (isset($_SESSION['user_id'])): ?>
             <nav>
                 <ul>
-                    <li><a href="list.php">My Items</a></li>
+                    <li><a href="list.php?wishlist=0">Items</a></li>
+                    <li><a href="list.php?wishlist=1">Wishlist</a></li>
                     <li><a href="add_item.php">Add Item</a></li>
                     <li><a href="logout.php">Logout</a></li>
                 </ul>
