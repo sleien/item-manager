@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindParam(':description', $_POST['description']);
     $stmt->bindParam(':price', $_POST['price']);
     $stmt->bindParam(':quantity', $_POST['quantity']);
-    $link = str_starts_with($_POST['link'], 'http') ? $_POST['link'] : 'https://' . $_POST['link'];
+    $link = $_POST['link'] != "" ? (substr($_POST['link'], 0, 4) === 'http') ? $_POST['link'] : 'https://' . $_POST['link'] : "";
     $stmt->bindParam(':link', $link);
     $stmt->bindParam(':main_user_id', $_SESSION['user_id']);
     $wishlist = isset($_POST['wishlist']) ? 1 : 0;
