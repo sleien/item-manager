@@ -176,4 +176,7 @@ nav a:hover {
         display: grid;
         grid-template-columns: 1fr;
     }
+    thead{
+        display:none;
+    }
 }
