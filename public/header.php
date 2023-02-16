@@ -19,6 +19,7 @@ if (!isset($_SESSION['user_id']) and !in_array(basename($_SERVER["SCRIPT_FILENAM
     <title>Item Manager</title>
     <link rel="icon" type="image/svg+xml" href="./img/icon.svg" sizes="any">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/script.js"></script>
     <script src="js/multiselect-dropdown.js"></script>
 
     <style>

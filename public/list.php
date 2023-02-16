@@ -16,16 +16,20 @@ if (isset($_GET["wishlist"])) {
 }
 
 // Prepare the SQL statement to retrieve the user's items and their stats
-$stmt = $conn->prepare("
-  SELECT items.*, user_items.*
-  FROM user_items
-  INNER JOIN items ON user_items.item_id = items.id
-  WHERE user_items.user_id = :user_id
-  AND wishlist = " . $_SESSION["wishlist"] . "
+$stmt = $conn->prepare("SELECT items.*, user_items.*, GROUP_CONCAT(tags.name) as tag_names
+FROM user_items
+INNER JOIN items ON user_items.item_id = items.id
+LEFT JOIN item_tags ON items.id = item_tags.item_id
+LEFT JOIN tags ON item_tags.tag_id = tags.id
+WHERE user_items.user_id = :user_id
+AND wishlist = :wishlist
+GROUP BY items.id
 ");
+
 
 // Bind the user ID to the prepared statement
 $stmt->bindParam(':user_id', $_SESSION['user_id']);
+$stmt->bindParam(':wishlist', $_SESSION["wishlist"]);
 
 // Execute the statement
 $stmt->execute();
@@ -41,8 +45,9 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <?php else : ?>
     <h1>Wishlist</h1>
   <?php endif; ?>
+  <input type="text" id="search" placeholder="Search for tag.." oninput="filterTable('mainList', this.value)">
   <?php if (count($items) > 0) : ?>
-    <table>
+    <table id="mainList">
       <thead>
         <tr>
           <th>Name</th>
@@ -53,7 +58,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
       </thead>
       <tbody>
         <?php foreach ($items as $item) : ?>
-          <tr>
+          <tr data-tags=" <?php echo $item["tag_names"]?>">
             <td>
               <?php echo htmlspecialchars($item['name']); ?>
             </td>
