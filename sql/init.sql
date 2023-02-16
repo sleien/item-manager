@@ -15,6 +15,10 @@ CREATE TABLE items (
   name VARCHAR(255) NOT NULL,
   description TEXT,
   price DECIMAL(10, 2),
+  quantity INT DEFAULT 0,
+  main_user_id INT(11),
+  wishlist BOOLEAN NOT NULL DEFAULT 0,
+  link VARCHAR(255),
   PRIMARY KEY (id)
 );
 
@@ -22,14 +26,9 @@ CREATE TABLE user_items (
   user_id INT(11) NOT NULL,
   item_id INT(11) NOT NULL,
   PRIMARY KEY (user_id, item_id),
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (item_id) REFERENCES items(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
 );
-
-ALTER TABLE items ADD COLUMN quantity INT DEFAULT 0;
-ALTER TABLE items ADD COLUMN main_user_id INT(11);
-ALTER TABLE items ADD wishlist BOOLEAN NOT NULL DEFAULT 0;
-ALTER TABLE items ADD link VARCHAR(255);
 
 CREATE TABLE tags (
   id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
