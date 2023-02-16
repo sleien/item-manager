@@ -75,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
+<?php include 'head.php'; ?>
 <section class="content">
   <h1>Edit Item</h1>
 

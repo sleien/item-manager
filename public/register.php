@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-
+<?php include 'head.php'; ?>
 <section class="content login">
     <h1>Register</h1>
 

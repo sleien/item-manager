@@ -39,6 +39,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
+<?php include 'head.php'; ?>
 <section class="content">
   <?php if($_SESSION["wishlist"] == 0) : ?>
     <h1>Items</h1>

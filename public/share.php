@@ -52,6 +52,7 @@ $result2 = $conn->query($query);
 
 ?>
 
+<?php include 'head.php'; ?>
 <section class="content">
     <h1>Share Item</h1>
 

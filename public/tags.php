@@ -41,6 +41,7 @@ if (isset($_GET['delete_tag'])) {
 }
 ?>
 
+<?php include 'head.php'; ?>
 <section class="content">
     <h1>Tags</h1>
     <form method="post">

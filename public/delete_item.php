@@ -33,7 +33,6 @@ try {
 
   // Redirect back to the list page
   header('Location: list.php');
-  include 'footer.php';
   exit;
 } catch (PDOException $e) {
   echo 'Error: ' . $e->getMessage();

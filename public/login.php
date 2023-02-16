@@ -46,7 +46,7 @@ if (isset($_POST['login'])) {
 
         // Redirect to the main page
         header('Location: list.php');
-        exit();
+        exit;
     } else {
         // Display an error message
         $error = "Invalid username or password.";
@@ -58,6 +58,7 @@ if (isset($_POST['login'])) {
 
 ?>
 
+<?php include 'head.php'; ?>
 <section class="content login">
     <h1>Login</h1>
 

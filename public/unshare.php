@@ -53,6 +53,5 @@ $stmt->execute([$unshare_user_id, $item_id]);
 
 // Redirect back to the list page
 header('Location: list.php');
-include 'footer.php';
 exit;
 ?>
