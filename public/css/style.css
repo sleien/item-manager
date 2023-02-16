@@ -140,16 +140,16 @@ nav ul {
     margin: 0;
     padding: 0;
     list-style: none;
-    display: grid;
-    grid-template-columns: max-content max-content 1fr max-content;
+    display: flex;
 }
 
 nav li {
+    
     margin: 0 1em;
 }
 
-nav li:last-child {
-    text-align: end;
+nav li:nth-last-child(2) {
+    margin-right: auto;
 }
 
 nav a {

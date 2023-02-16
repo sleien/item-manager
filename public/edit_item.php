@@ -25,6 +25,11 @@ $stmt->execute([$item_id]);
 
 $item = $stmt->fetch(PDO::FETCH_ASSOC);
 
+$stmt = $conn->prepare('SELECT tag.id, tag.name, CASE WHEN item.item_id IS NOT NULL THEN 1 ELSE 0 END AS is_selected FROM tags tag LEFT JOIN item_tags item ON tag.id = item.tag_id AND item.item_id = ?');
+$stmt->execute([$item_id]);
+
+$tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // check if item was found
 if (!$item) {
   header('Location: list.php');
@@ -39,13 +44,22 @@ if ($_SESSION['user_id'] != $item['main_user_id']) {
 
 // check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  foreach ($tags as $tag) {
+    if (isset($_POST['tag_' . $tag['id']]) and $tag['is_selected'] == 0) {
+      $stmt = $conn->prepare('INSERT INTO item_tags (item_id, tag_id) VALUES (?, ?)');
+      $stmt->execute([$item_id, $tag['id']]);
+    } elseif (!isset($_POST['tag_' . $tag['id']]) and $tag['is_selected'] == 1) {
+      $stmt = $conn->prepare('DELETE FROM item_tags WHERE item_id = ? AND tag_id = ?');
+      $stmt->execute([$item_id, $tag['id']]);
+    }
+  }
   $stmt = $conn->prepare('UPDATE items SET name = :name, description = :description, price = :price, quantity = :quantity, link = :link, wishlist = :wishlist WHERE id = ' . $item_id);
   // Bind the form data to the prepared statement
   $stmt->bindParam(':name', $_POST['name']);
   $stmt->bindParam(':description', $_POST['description']);
   $stmt->bindParam(':price', $_POST['price']);
   $stmt->bindParam(':quantity', $_POST['quantity']);
-  $link = str_starts_with($_POST['link'], 'http') ? $_POST['link'] : 'https://' . $_POST['link'];
+  $link = $_POST['link'] != "" ? (substr($_POST['link'], 0, 4) === 'http') ? $_POST['link'] : 'https://' . $_POST['link'] : "";
   $stmt->bindParam(':link', $link);
   $wishlist = isset($_POST['wishlist']) ? 1 : 0;
   $stmt->bindParam(':wishlist', $wishlist);
@@ -85,12 +99,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div>
       <label for="link">Link:</label>
-      <input type="text" name="link" id="link" value="<?php echo $item['link']; ?>" placeholder="https://example.com" pattern="^(https?://)?([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?$">
+      <input type="text" name="link" id="link" value="<?php echo $item['link']; ?>" placeholder="https://example.com"
+        pattern="^(https?://)?([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?$">
     </div>
 
     <div class="form-checkbox">
       <label for="wishlist">Wishlist:</label>
-      <input type="checkbox" name="wishlist" id="wishlist" <?php if ($item['wishlist'] == 1) echo 'checked="checked"'; ?>>
+      <input type="checkbox" name="wishlist" id="wishlist" <?php if ($item['wishlist'] == 1)
+        echo 'checked="checked"'; ?>>
+    </div>
+
+    <div>
+      <select multiple multiselect-search="true" id="sel1">
+        <?php foreach ($tags as $tag): ?>
+          <option id="tag_<?php echo $tag['id'];?>"<?php if($tag['is_selected'] == 1) : echo " selected"; endif?>><?php echo $tag['name']; ?></option>
+        <?php endforeach ?>
+      </select>
     </div>
     <button type="submit">Save</button>
   </form>
