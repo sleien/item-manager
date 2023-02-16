@@ -1,6 +1,6 @@
 <?php
 // start session if it hasn't been started already
-if (!isset($_SESSION)) {
+if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
 if (!isset($_SESSION['user_id']) and !in_array(basename($_SERVER["SCRIPT_FILENAME"], ".php"), array("login", "register"))) {
     // redirect to login page if user is not logged in
     header('Location: login.php');
-    exit();
+    exit;
 }
 ?>
 
@@ -19,12 +19,6 @@ if (!isset($_SESSION['user_id']) and !in_array(basename($_SERVER["SCRIPT_FILENAM
     <title>Item Manager</title>
     <link rel="icon" type="image/svg+xml" href="./img/icon.svg" sizes="any">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="js/script.js"></script>
-    <script src="js/multiselect-dropdown.js"></script>
-
-    <style>
-        <?php include 'css/style.css'; ?>
-    </style>
 </head>
 
 <body>

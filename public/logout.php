@@ -1,7 +1,5 @@
 <?php
 include 'header.php';
-// Start a session
-session_start();
 
 // Unset all session variables
 $_SESSION = array();
@@ -12,6 +10,6 @@ session_destroy();
 // Redirect to the login page
 header('Location: login.php');
 include('footer.php');
-exit();
+exit;
 
 ?>

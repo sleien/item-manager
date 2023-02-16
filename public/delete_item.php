@@ -25,10 +25,7 @@ try {
     header('Location: list.php');
     exit;
   }
-  // Clean up the user_items table by deleting all records with the deleted item's ID
-  $stmt = $conn->prepare('DELETE FROM user_items WHERE item_id = ?');
-  $stmt->execute([$item_id]);
-
+  
   // Delete the item from the items table
   $stmt = $conn->prepare('DELETE FROM items WHERE id = ?');
   $stmt->execute([$item_id]);

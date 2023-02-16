@@ -52,7 +52,6 @@ h1::after {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.1);
-    align-items: center;
 }
 
 table {
@@ -141,6 +140,7 @@ nav ul {
     padding: 0;
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
 }
 
 nav li {
@@ -178,5 +178,12 @@ nav a:hover {
     }
     thead{
         display:none;
+    }
+    nav li:nth-last-child(2) {
+        margin-right: unset;
+    }
+    form {
+        padding: 1em 0.5em;
+        max-width: unset;
     }
 }
